@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while read p; do
+    IFS=$'\t' read -r -a tokens <<< "$p"
+    zip=${tokens[0]}
+    zip="$(echo -e "${zip}" | tr -d '[[:space:]]')"
+    lat=${tokens[1]}
+    lon=${tokens[2]}
+    echo {\""zip\"":\""$zip\"", \""lat\"":$lat, \""lon\"":$lon}
+done < $1 | sed 's/+144/ 144/g' | sed 's/+145/ 145/g'
